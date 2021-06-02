@@ -1,0 +1,42 @@
+name: TreeboTickets
+version: ${project.version}
+main: me.shakeforprotein.treebotickets.TreeboTickets
+api-version: 1.13
+depend: [TreeboRoots]
+authors: [ShakeforProtein]
+website: http://treebomc.com
+
+commands:
+  discord:
+    description: Overides discordsrv commands.
+    usage: /<command> <args>
+  getStat:
+    description: pulls player stat from database. Add <tablename> if used from console.
+    usage: /<command> <stat> [player] [server | sky gamemode]
+  onhere:
+    description: Shows own ontime on this server
+    usage: /<command>
+  restarttimed:
+    description: issues restart command in X ticks
+    usage: /<command> <args>
+    permission: treebo.admin
+  restartwhenempty:
+    description: issues restart command in X ticks
+    usage: /<command> <args>
+    permission: treebo.admin
+  ticket:
+    description:
+    usage: /<command> <open | close| view | update | list> [Description]
+  review:
+    description:
+    usage: /<command> <description>
+  idea:
+    description:
+    usage: /<command> <description>
+  staffreport:
+    description: Opens the staff list gui or reports a list of inactive staff.
+    usage: /<command> [list]
+    permission: treebo.admin
+  ticketgui:
+    permission: treebo.admin
+    description: Opens the ticket managment gui
