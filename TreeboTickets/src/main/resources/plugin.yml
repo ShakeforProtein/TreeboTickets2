@@ -3,6 +3,7 @@ version: ${project.version}
 main: me.shakeforprotein.treebotickets.TreeboTickets
 api-version: 1.13
 depend: [TreeboRoots]
+loadbefore: [Essentials]
 authors: [ShakeforProtein]
 website: http://treebomc.com
 

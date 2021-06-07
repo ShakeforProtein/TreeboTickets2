@@ -37,7 +37,7 @@ public final class TreeboTickets extends JavaPlugin {
 
 
     //define data vatiables
-    private Semver requiredTreeboRootsVersion = new Semver("0.0.2");
+    private Semver requiredTreeboRootsVersion = new Semver("0.0.4");
     public String badge = getConfig().getString("General.Messages.Badge") == null ? ChatColor.translateAlternateColorCodes('&', "&3&l[&2TreeboTicketsP&3&l]&r") : ChatColor.translateAlternateColorCodes('&', getConfig().getString("General.Messages.Badge"));
     public String err = badge + ChatColor.RED + "Error: " + ChatColor.RESET;
     public String ticketTable = "tickets";
@@ -120,8 +120,7 @@ public final class TreeboTickets extends JavaPlugin {
 
     private void scheduleRootsIntegrations(){
         Bukkit.getScheduler().runTaskLater(this, () -> {
-            roots.updateHandler.registerPlugin(instance, "TreeboMC", "TreeboTickets");
-            roots.getInstance().updateHandler.registerPlugin(instance, "TreeboMC", "TreeboTickets");
+            roots.updateHandler.registerPlugin(instance, "TreeboMC", "TreeboTickets2");
             new HelpBook(instance);
             registerDefaultDiscordHooks();
         }, 100L);
@@ -146,7 +145,7 @@ public final class TreeboTickets extends JavaPlugin {
                                 playerOntimeObject.setAfkTime(playerOntimeObject.getAfkTime() + 1200);
                             }
                         } else {
-                            if(playerOntimeObject.getLastLocation().distance(playerOntimeObject.getPlayer().getLocation()) < 10){
+                            if(playerOntimeObject.getLastLocation().getWorld() == playerOntimeObject.getPlayer().getLocation().getWorld() && playerOntimeObject.getLastLocation().distance(playerOntimeObject.getPlayer().getLocation()) < 10){
                                 playerOntimeObject.setAFK(true);
                             }
                         }

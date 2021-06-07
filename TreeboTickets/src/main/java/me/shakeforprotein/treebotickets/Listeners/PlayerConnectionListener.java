@@ -26,7 +26,8 @@ public class PlayerConnectionListener implements Listener {
     public void playerConnectionEstablishedEvent(PlayerJoinEvent e) {
         //Scenario: Player has joined.
         //Process: Create onject to track players onTime.
-        new PlayerOntimeObject(pl, e.getPlayer());
+        PlayerOntimeObject playerOntimeObject = new PlayerOntimeObject(pl, e.getPlayer());
+        pl.playerOntimeHash.putIfAbsent(e.getPlayer(), playerOntimeObject);
 
 
         //Scenario: Admin join the server
@@ -36,7 +37,6 @@ public class PlayerConnectionListener implements Listener {
             Bukkit.getScheduler().runTaskLater(pl, () -> {
                 adminStats(e.getPlayer());
                 pl.staffReport.getStaffOnTimeReport(e.getPlayer());
-                Bukkit.dispatchCommand(e.getPlayer(), "staffreport list");
             }, 100L);
         }
     }
@@ -58,10 +58,10 @@ public class PlayerConnectionListener implements Listener {
                 columns[0] = "STATUS";
                 values[0] = "OPEN";
 
-                ResultSet totalTicketsQueryResultSet = pl.roots.mySQL.processPreparedSelectQuery("Count (*) AS TOTAL", pl.ticketTable, columns, values);
+                ResultSet totalTicketsQueryResultSet = pl.roots.mySQL.processPreparedSelectQuery("Count(*) AS TOTAL", pl.ticketTable, columns, values);
 
                 while (totalTicketsQueryResultSet.next()) {
-                    p.sendMessage(ChatColor.GOLD + "[X]" + ChatColor.RESET + "Open Tickets:" + totalTicketsQueryResultSet.getInt("TOTAL"));
+                    p.sendMessage(ChatColor.GOLD + "[X]" + ChatColor.RESET + "Open Tickets: " + ChatColor.GOLD + totalTicketsQueryResultSet.getInt("TOTAL"));
                 }
 
             } catch (SQLException ex) {

@@ -55,8 +55,8 @@ public class PlayerOntimeObject {
         Long dbAFK = 0L;
         Long playTime = 0L;
 
-        ResultSet onTimeQueryResponse;
-        ResultSet serverStatsQueryResponse;
+        ResultSet onTimeQueryCountResponse;
+        ResultSet serverStatsQueryCountResponse;
 
         String[] columns = new String[1];
         String[] values = new String[1];
@@ -66,23 +66,27 @@ public class PlayerOntimeObject {
         columns[0] = "UUID";
         values[0] = uuid;
 
+        ResultSet onTimeQueryDataResponse = pl.roots.mySQL.processPreparedSelectQuery("*", pl.ontimeTable, columns, values);
+
         //Process: Check for existing data
-        onTimeQueryResponse = pl.roots.mySQL.processPreparedSelectQuery("Count(*) AS TOTAL", pl.ontimeTable, columns, values);
-        serverStatsQueryResponse = pl.roots.mySQL.processPreparedSelectQuery("Count(*) AS TOTAL", "stats_" + pl.roots.getConfig().getString("Gemeral.ServerDetails.ServerName"), columns, values);
+        onTimeQueryCountResponse = pl.roots.mySQL.processPreparedSelectQuery("Count(*) AS TOTAL", pl.ontimeTable, columns, values);
+        serverStatsQueryCountResponse = pl.roots.mySQL.processPreparedSelectQuery("Count(*) AS TOTAL", "stats_" + pl.roots.getConfig().getString("General.ServerDetails.ServerName"), columns, values);
 
         try {
 
-            while (onTimeQueryResponse.next()) {
-                existsInOntimeDatabase = (onTimeQueryResponse.getInt("TOTAL") != 0);
+            while (onTimeQueryCountResponse.next()) {
+                existsInOntimeDatabase = (onTimeQueryCountResponse.getInt("TOTAL") != 0);
                 if(existsInOntimeDatabase) {
-                    totalOn = onTimeQueryResponse.getLong("TotalOn");
-                    dbAFK = onTimeQueryResponse.getLong("AFKTIME");
-                    afkTime = dbAFK + afkTime;
+                    while(onTimeQueryDataResponse.next()) {
+                        totalOn = onTimeQueryDataResponse.getLong("TotalOn");
+                        dbAFK = onTimeQueryDataResponse.getLong("AFKTIME");
+                        afkTime = dbAFK + afkTime;
+                    }
                 }
             }
 
-            while (serverStatsQueryResponse.next()) {
-                existsInOntimeDatabase = (serverStatsQueryResponse.getInt("TOTAL") != 0);
+            while (serverStatsQueryCountResponse.next()) {
+                existsInOntimeDatabase = (serverStatsQueryCountResponse.getInt("TOTAL") != 0);
             }
 
             if(existsInOntimeDatabase){
@@ -119,7 +123,7 @@ public class PlayerOntimeObject {
                 values[4] = connectionEstablished + "";
                 values[5] = ipAddress;
 
-                pl.roots.mySQL.processPreparedUpdate(pl.ontimeTable, columns, values, "UUID", "=", uuid.toString());
+                pl.roots.mySQL.processPreparedUpdate(pl.ontimeTable, columns, values, "UUID", "=", uuid);
             } else {
                 /*
                 Scenario: Player does not exist in the onTime table
@@ -183,7 +187,7 @@ public class PlayerOntimeObject {
                 values[0] = uuid;
                 values[1] = displayName;
                 values[2] = playTime + "";
-                pl.roots.mySQL.processPreparedInsert("stats_" +  pl.roots.getConfig().getString("Gemeral.ServerDetails.ServerName"), columns, values);
+                pl.roots.mySQL.processPreparedInsert("stats_" +  pl.roots.getConfig().getString("General.ServerDetails.ServerName"), columns, values);
             }
         } catch(SQLException ex){
             pl.roots.errorLogger.logError(pl, ex);

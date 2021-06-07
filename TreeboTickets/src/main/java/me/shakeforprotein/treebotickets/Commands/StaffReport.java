@@ -60,7 +60,7 @@ public class StaffReport implements CommandExecutor {
     }
 
     public void getStaffOnTimeReport(Player messageRecipient) {
-        if(messageRecipient.hasPermission("treebo,admin")) {
+        if(messageRecipient.hasPermission("treebo.admin")) {
             ResultSet staffOntimeResult;
 
             Set<String> staff = new HashSet<>();
