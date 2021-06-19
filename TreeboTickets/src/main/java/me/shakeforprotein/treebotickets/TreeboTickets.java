@@ -20,6 +20,7 @@ import me.shakeforprotein.treebotickets.Listeners.TicketManagmentGuiListener;
 import me.shakeforprotein.treebotickets.Objects.PlayerOntimeObject;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -120,7 +121,7 @@ public final class TreeboTickets extends JavaPlugin {
 
     private void scheduleRootsIntegrations(){
         Bukkit.getScheduler().runTaskLater(this, () -> {
-            roots.updateHandler.registerPlugin(instance, "TreeboMC", "TreeboTickets2");
+            roots.updateHandler.registerPlugin(instance, "TreeboMC", "TreeboTickets2", Material.PAPER);
             new HelpBook(instance);
             registerDefaultDiscordHooks();
         }, 100L);

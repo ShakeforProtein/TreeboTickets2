@@ -84,6 +84,7 @@ public class TicketObject {
         try {
             while (ticketData.next()) {
                 int ticketID = ticketData.getInt("ID");
+                player.sendMessage(pl.badge + "Ticket with ID: " + ticketID + " has been submitted successfully.");
 
                 if(pl.roots.discord.getExternalHook("TreeboTickets_" + type.toUpperCase() + "_Hook") != null){
                     WebhookHandler webhook = pl.roots.discord.getExternalHook("TreeboTickets_" + type.toUpperCase() + "_Hook");
