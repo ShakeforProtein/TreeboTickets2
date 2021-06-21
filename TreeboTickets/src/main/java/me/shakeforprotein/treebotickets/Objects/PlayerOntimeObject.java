@@ -139,8 +139,8 @@ public class PlayerOntimeObject {
                  LastLeft - This will be the current time in millis
                  */
 
-                columns = new String[8];
-                values = new String [8];
+                columns = new String[9];
+                values = new String [9];
 
                 columns[0] = "UUID";
                 columns[1] = "CurrentName";

@@ -6,6 +6,8 @@ depend: [TreeboRoots]
 loadbefore: [Essentials]
 authors: [ShakeforProtein]
 website: http://treebomc.com
+build-date: ${timestamp}
+java-build-version: ${java.version}
 
 commands:
   discord:
