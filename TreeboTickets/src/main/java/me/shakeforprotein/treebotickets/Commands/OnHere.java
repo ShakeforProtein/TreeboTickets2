@@ -33,7 +33,7 @@ public class OnHere implements CommandExecutor {
             if (!p.hasPermission("treebo.admin") || args.length == 0) {
                 retrieveOntime(p.getName(), sender);
             } else if(p.hasPermission("treebo.admin") && args.length == 1){
-                retrieveOntime(args[1], sender);
+                retrieveOntime(args[0], sender);
             } else {
                 p.sendMessage(pl.badge + " This command accepts 0 - 1 argument.");
             }
