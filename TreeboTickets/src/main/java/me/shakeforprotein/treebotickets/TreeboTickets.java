@@ -140,7 +140,7 @@ public final class TreeboTickets extends JavaPlugin {
                 for(PlayerOntimeObject playerOntimeObject : playerOntimeHash.values()){
                     if(playerOntimeObject.getPlayer().isOnline()){
                         if(playerOntimeObject.isAFK()){
-                            if(playerOntimeObject.getLastLocation().distance(playerOntimeObject.getPlayer().getLocation()) > 10){
+                            if(playerOntimeObject.getLastLocation().getWorld() == playerOntimeObject.getPlayer().getLocation().getWorld() && playerOntimeObject.getLastLocation().distance(playerOntimeObject.getPlayer().getLocation()) > 10){
                                 playerOntimeObject.setAFK(false);
                             } else {
                                 playerOntimeObject.setAfkTime(playerOntimeObject.getAfkTime() + 1200);
